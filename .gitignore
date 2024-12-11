@@ -1,4 +1,6 @@
 # generate new .html and .gpx with MountainPaths.py
 *.html
 *.gpx
+*.mp4
 *.norg
+

@@ -265,6 +265,12 @@ class MountainPath:
 
             # Total number of frames is the number of steps
             ani = FuncAnimation(fig, update, frames=len(steps), interval=0, blit=True)
+            # Save the animation as .mp4
+            ani.save(
+                f"{self.algorithm}_{self.file_path.rstrip(".tif")}.mp4",
+                writer="ffmpeg",
+                fps=30,
+            )
             # Show the animation
             plt.show()
         # Draw the final path
@@ -400,11 +406,13 @@ class MountainPath:
             icon=folium.Icon(icon="map_pin", color="red"),
         ).add_to(map)
         # draw path
-        folium.PolyLine(path, color="red", weight=2.5, tooltip=f"{self.algorithm}").add_to(map)
+        folium.PolyLine(
+            path, color="red", weight=2.5, tooltip=f"{self.algorithm}"
+        ).add_to(map)
         # save .gpx of path
         self.export_to_gpx(path)
         # save map as html
-        file_name = f"{self.algorithm.lower()}_{self.file_path}.html"
+        file_name = f"{self.algorithm.lower()}_{self.file_path.rstrip(".tif")}.html"
         map.save(file_name)
         full_path = os.path.abspath(file_name)
         print(f"HTML file saved at file://{full_path}")
@@ -454,7 +462,9 @@ class MountainPath:
                 gpxpy.gpx.GPXTrackPoint(latitude=lat, longitude=lon)
             )
         # Write to a file
-        output_file = f"{self.algorithm.lower()}_{self.file_path}_path.gpx"
+        output_file = (
+            f"{self.algorithm.lower()}_{self.file_path.rstrip(".tif")}_path.gpx"
+        )
         with open(output_file, "w") as f:
             f.write(gpx.to_xml())
         print(f"GPX file saved as {output_file}")
@@ -536,11 +546,12 @@ def main():
     args = parser.parse_args()
 
     # death valley to mt whitney.
-    start = (36.20043, -116.85046)
-    end = (36.57849, -118.29238)
+    # start = (36.20043, -116.85046)
+    # end = (36.57849, -118.29238)
+
     # lone peak to gobblers knob.
-    # start = (40.52633, -111.75532)
-    # end = (40.67089, -111.68265)
+    start = (40.52633, -111.75532)
+    end = (40.67089, -111.68265)
 
     # home to hidden peak.
     # start = (40.61806, -111.84917)
@@ -561,7 +572,7 @@ def main():
         start,
         end,
     )
-    mountain_path.solve(10000)
+    mountain_path.solve(70)
 
 
 if __name__ == "__main__":
