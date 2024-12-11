@@ -1,5 +1,3 @@
-# use tif2npy.py for .npy file instead of uploading the whole .tif
-*.tif
 # generate new .html and .gpx with MountainPaths.py
 *.html
 *.gpx
