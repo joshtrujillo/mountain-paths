@@ -114,9 +114,11 @@ class MountainPath:
                     return 0
             case "AStar":
                 # Estimate elevation difference to goal
+                """
                 current_elevation = self.elevation_data[node.state[0], node.state[1]]
                 goal_elevation = self.elevation_data[self.end[0], self.end[1]]
                 elevation_diff = abs(current_elevation - goal_elevation)
+                """
                 return node.cost_from_start + self.heuristic(node.state)
             case "Dijkstra":
                 if node.parent:
